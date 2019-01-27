@@ -1,13 +1,9 @@
 <div class="view-form-icon">
     <div>
-        <label ng-class="{required: Required}">{{label}}</label>
+        <label>{{label}}</label>
         <div>
-            <input class="form-control" ui-mask="{{mask}}" ng-model="phoneNumber"></input>
+            <input type="tel" class="form-control" ui-mask="{{mask}}" ng-model="phoneNumber"></input>
         </div>
         <i class="fa fa-phone"></i>
     </div>
 </div>
-
-
-
-

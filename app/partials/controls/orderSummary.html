@@ -1,4 +1,4 @@
-<div class="panel panel-primary">
+<div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title panel-primary">
             {{('Checkout' | r) + ' ' + ('Summary' | r) | xlat}}
@@ -9,22 +9,28 @@
         <loadingindicator ng-show="couponRemoveIndicator" title="{{'Please wait while we remove your promotion code' | r | xlat}}" />
         <orderconfirmationmessage />
         <p>
-            <span class="text-info">{{'Items' | r | xlat}}</span>
-            <span class="pull-right">{{currentOrder.LineItems.length}}</span>
+            <span class="whiteText">{{'Items' | r | xlat}}</span>
+            <span ng-show="!handlingCharge" class="pull-right text-success">{{currentOrder.LineItems.length}}</span>
+            <span ng-show="handlingCharge > 0" class="pull-right text-success">{{currentOrder.LineItems.length - 1}}</span>
         </p>
         <p ng-if="!(user.Permissions.contains('HidePricing'))">
-            <span class="text-info">{{'Subtotal' | r | xlat}}</span>
-            <span class="pull-right">{{currentOrder.Subtotal | culturecurrency}}</span>
+            <span class="whiteText">{{'Subtotal' | r | xlat}}</span>
+            <span ng-show="!handlingCharge" class="pull-right text-success">{{currentOrder.Subtotal }}</span>
+            <span ng-show="handlingCharge > 0" class="pull-right text-success">{{currentOrder.Subtotal - handlingCharge}}</span>
+        </p>
+        <!--<p ng-if="!(user.Permissions.contains('HidePricing'))">
+            <span class="whiteText">{{('Shipping' | r) + ' ' + ('Costs' | r) | xlat}}</span>
+            <span class="pull-right text-success">{{currentOrder.ShippingCost | culturecurrency}}</span>
+        </p>-->
+        <p ng-show="handlingCharge > 0">
+            <span class="whiteText">{{'Gift Card Handling Charge' | r | xlat}}</span>
+            <span class="pull-right text-success">{{handlingCharge}}</span>
         </p>
         <p ng-if="!(user.Permissions.contains('HidePricing'))">
-            <span class="text-info">{{('Shipping' | r) + ' ' + ('Costs' | r) | xlat}}</span>
-            <span class="pull-right">{{currentOrder.ShippingCost | culturecurrency}}</span>
+            <span class="whiteText">{{'Tax' | r | xlat}}</span>
+            <span class="pull-right text-success">{{currentOrder.TaxCost || 0 }}</span>
         </p>
-        <p ng-if="!(user.Permissions.contains('HidePricing'))">
-            <span class="text-info">{{'Tax' | r | xlat}}</span>
-            <span class="pull-right">{{currentOrder.TaxCost || 0 | culturecurrency}}</span>
-        </p>
-        <div ng-show="user.Permissions.contains('ViewPromotions')">
+        <!--<div ng-show="user.Permissions.contains('ViewPromotions')">
             <div ng-show="!currentOrder.Coupon">
                 <div class="form-group view-form-icon">
                     <div>
@@ -46,13 +52,13 @@
                 <button type="button"  class="btn btn-danger pull-right" ng-click="removeCoupon()">Remove {{'Coupon' | r | xlat}}</button>
                 <p class="text-left" ng-show="currentOrder.Coupon.ExpirationDate"><small class="text-danger">{{'Expires' | r | xlat}}: {{currentOrder.Coupon.ExpirationDate | date:user.Culture.DateFormat.short}}</small></p>
             </div>
-        </div>
+        </div>-->
         <hr/>
         <h4 ng-if="!(user.Permissions.contains('HidePricing'))">
-            <strong>{{'Total' | r | xlat}}</strong>
-            <span class="text-success pull-right"><strong>{{currentOrder.Total | culturecurrency}}</strong></span>
+            <strong class="whiteText">{{'Total' | r | xlat}}</strong>
+            <span class="text-success pull-right"><strong>{{currentOrder.Total}}</strong></span>
         </h4>
-        <p class="text-info text-left" ng-if="user.Company.TaxMethod != 'NoTax' && !user.Permissions.contains('HidePricing')">{{('Shipping' | r) + ', handling and tax may be added to this subtotal.' | xlat}}</p>
+        <p class="whiteText text-left" ng-if="user.Company.TaxMethod != 'NoTax' && !user.Permissions.contains('HidePricing')">Tax may be added to this subtotal.</p>
     </div>
     <div class="panel-footer">
         <div class="view-form-icon" ng-show="user.Permissions.contains('SendOrderNotificationToOthers') && !(cart_shipping.$invalid || cart_order.$invalid || cart_billing.$invalid)" >
@@ -60,7 +66,7 @@
                 <label ng-show="currentOrder.ExternalOrderDetailRecipients">{{('Email' | r) + ' ' + ('Notification' | r) | xlat}}</label>
                 <input class="form-control" ng-disabled="cart_shipping.$invalid || cart_order.$invalid || cart_billing.$invalid" type="email" ng-model="currentOrder.ExternalOrderDetailRecipients" placeholder="{{('Email' | r) + ' ' +  ('Address' | r) | xlat}}" autocomplete="off" />
                 <i class="fa fa-envelope-o"></i>
-                <span class="help-block text-left"><small>{{'Send a copy of the order details to above email address.' | r | xlat}}</small></span>
+                <span class="help-block text-left"><small>{{'Provide an email address if you would like to receive ' + ('Notification' | r) + 's concerning this order.' | r | xlat}}</small></span>
             </div>
         </div>
         <button class="btn btn-default" redirect="/security">

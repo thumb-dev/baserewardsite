@@ -17,7 +17,7 @@
             <form name="cart_billing" novalidate="">
                 <div>
                     <paymentselector></paymentselector>
-                    <div class="view-form-icon" ng-show="billaddresses.length > 0">
+                    <div class="view-form-icon">
                         <div ng-class="{'view-form-select': !currentOrder.BillAddressID, '': currentOrder.BillAddressID }">
                             <label class="required">{{('Billing' | r) + ' ' + ('Address' | r) | xlat}}</label>
                             <select class="form-control" ng-show="billaddresses" name="billingAddress"
@@ -27,7 +27,7 @@
                             <i class="fa fa-map-marker"></i>
                         </div>
                     </div>
-                    <div class="order-location" ng-show="BillAddress">
+                    <div class="order-location">
                         <p><strong><small>{{('Billing' | r) + ' ' + ('Location' | r) | xlat}}</small></strong></p>
                         <p ng-show="BillAddress.AddressName"><small>{{BillAddress.AddressName}}</small></p>
                         <p ng-show="BillAddress.CompanyName"><small>{{BillAddress.CompanyName}}</small></p>
@@ -36,12 +36,10 @@
                         </p>
                         <div class="row" ng-show="user.Permissions.contains('EditBillToName') && !BillAddress.IsCustEditable">
                             <div class="col-sm-2">
-                                <input class="form-control" name="billingFirstName" ng-required="currentOrder.BillingEnabled && user.Permissions.contains('EditBillToName') && !BillAddress.IsCustEditable" type="text" ng-model="currentOrder.BillFirstName"
-                                       placeholder="{{('First' | r) + ' ' + ('Name' | r) | xlat}}" autocomplete="off" />
+                                <input class="form-control" ng-required="user.Permissions.contains('EditBillToName') && !BillAddress.IsCustEditable" type="text" ng-model="currentOrder.BillFirstName" placeholder="{{('First' | r) + ' ' + ('Name' | r) | xlat}}" autocomplete="off" />
                             </div>
                             <div class="col-sm-2">
-                                <input class="form-control" name="billingLastName" ng-required="currentOrder.BillingEnabled && user.Permissions.contains('EditBillToName') && !BillAddress.IsCustEditable" type="text" ng-model="currentOrder.BillLastName"
-                                       placeholder="{{('Last' | r) + ' ' + ('Name' | r) | xlat}}"  />
+                                <input class="form-control" ng-required="user.Permissions.contains('EditBillToName') && !BillAddress.IsCustEditable" type="text" ng-model="currentOrder.BillLastName" placeholder="{{('Last' | r) + ' ' + ('Name' | r) | xlat}}"  />
                             </div>
                         </div>
                         <p ng-show="BillAddress.Street1"><small>{{BillAddress.Street1}}</small></p>

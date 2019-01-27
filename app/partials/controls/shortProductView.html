@@ -1,10 +1,10 @@
 <div class="451qa_prod_item row" ng-swipe-left="showSwipe = true">
     <div class="col-sm-4 text-center">
         <a class="thumbnail" href="{{LineItem.Product.Type == 'Kit' ? 'kit' : 'product'}}/{{LineItem.Product.InteropID}}">
-            <figure ng-show="LineItem.Variant.SmallImageUrl || LineItem.Product.SmallImageUrl" >
-                <img ng-src="{{LineItem.Variant.SmallImageUrl || LineItem.Product.SmallImageUrl}}"/>
+            <figure ng-show="LineItem.Variant.LargeImageUrl || LineItem.Product.LargeImageUrl" >
+                <img ng-src="{{LineItem.Variant.LargeImageUrl || LineItem.Product.LargeImageUrl}}"/>
             </figure>
-            <div class="empty" ng-hide="LineItem.Variant.SmallImageUrl || LineItem.Product.SmallImageUrl">
+            <div class="empty" ng-hide="LineItem.Variant.LargeImageUrl || LineItem.Product.LargeImageUrl">
                 <span class="fa empty"><i class="fa fa-camera"></i></span>
             </div>
             <div class="btn btn-default">

@@ -18,7 +18,7 @@
                 <div>
                     <div>
                         <span class="btn-group">
-                            <button ng-show="user.Permissions.contains('ShipToMultipleAddresses') && currentOrder.LineItems.length > 1" class="btn btn-default" type="button" ng-click="setSingleShipAddress()">
+                            <button ng-show="user.Permissions.contains('ShipToMultipleAddresses') && currentOrder.LineItems.length > 1" class="btn btn-default" ng-click="setSingleShipAddress()">
                                 <i ng-class="{'fa fa-check': !currentOrder.IsMultipleShip() }"></i>
                                 {{'Single ' + ('Address' | r) | xlat}}
                             </button>
@@ -48,12 +48,11 @@
                                         </select>
                                         <i class="fa fa-map-marker"></i>
                                 </div>
-                                <div ng-show="user.ShipMethod != null && shippers" ng-class="{'view-form-select': !currentOrder.LineItems[0].ShipperName, '': currentOrder.LineItems[0].ShipperName }">
+                                <div ng-show="user.ShipMethod != null && shippers && user.ShipMethod.ShipperSelectionType == 'UserDropDown'" ng-class="{'view-form-select': !currentOrder.LineItems[0].ShipperName, '': currentOrder.LineItems[0].ShipperName }">
                                     <label ng-class="{required: !currentOrder.IsMultipleShip() && user.ShipMethod != null}" ng-show="currentOrder.LineItems[0].ShipperName || !currentOrder.IsMultipleShip() && user.ShipMethod != null">{{('Shipping' | r) + ' Method' | xlat}}</label>
                                     <select class="form-control" ng-change="updateShipper()" name="shipMethod"
                                             ng-model="currentOrder.LineItems[0].ShipperName"
-                                            ng-show="user.ShipMethod.ShipperSelectionType == 'UserDropDown'"
-                                            ng-options="shipper.Name as (shipper.Name + ' ' + (shipper.ShippingRate.Price | currency | xlat)) for shipper in shippers"
+                                            ng-options="shipper.Name as shipper.Name for shipper in shippers"
                                             ng-required="!currentOrder.IsMultipleShip() && user.ShipMethod != null" >
                                         <option value=""></option>
                                     </select>
@@ -67,12 +66,12 @@
                                 <p ng-show="(orderShipAddress.FirstName || orderShipAddress.LastName) && (!user.Permissions.contains('EditShipToName') && !orderShipAddress.IsCustEditable)">
                                     <small>{{orderShipAddress.FirstName + ' ' + orderShipAddress.LastName}}</small>
                                 </p>
-                                <div class="row" ng-show="!currentOrder.IsMultipleShip() && user.Permissions.contains('EditShipToName') && (orderShipAddress && !orderShipAddress.IsCustEditable)">
-                                    <div class="col-sm-2">
-                                         <input class="form-control" type="text" ng-model="currentOrder.LineItems[0].ShipFirstName" placeholder="{{('First' | r) + ' ' + ('Name' | r) | xlat}}" />
+                                <div class="row" ng-show="!currentOrder.IsMultipleShip() && user.Permissions.contains('EditShipToName') && orderShipAddress">
+                                    <div class="col-sm-3">
+                                         <input class="form-control" type="text" ng-model="currentOrder.LineItems[0].ShipFirstName" placeholder="{{('First' | r) + ' ' + ('Name' | r) | xlat}}" required />
                                     </div>
-                                    <div class="col-sm-2">
-                                        <input class="form-control" type="text" ng-model="currentOrder.LineItems[0].ShipLastName" placeholder="{{('Last' | r) + ' ' + ('Name' | r) | xlat}}" />
+                                    <div class="col-sm-3">
+                                        <input class="form-control" type="text" ng-model="currentOrder.LineItems[0].ShipLastName" placeholder="{{('Last' | r) + ' ' + ('Name' | r) | xlat}}" required />
                                     </div>
                                 </div>
                                 <p ng-show="orderShipAddress.Street1"><small>{{orderShipAddress.Street1}}</small></p>
@@ -99,7 +98,7 @@
                                     <small><strong>{{item.Product.Name}}</strong>{{' x ' + item.Quantity}}</small>
                                 </p>
                                 <p ng-show="user.Permissions.contains('EditShipToName') && !ShipAddress.IsCustEditable"><small>Attention:</small></p>
-                                <div class="row" ng-show="user.Permissions.contains('EditShipToName') && !ShipAddress.IsCustEditable && item.ShipAddressID">
+                                <div class="row" ng-show="user.Permissions.contains('EditShipToName') && !ShipAddress.IsCustEditable">
                                     <div class="view-form-icon col-sm-6">
                                         <div>
                                             <label ng-show="item.ShipFirstName || currentOrder.IsMultipleShip() && user.Permissions.contains('EditShipToName') && !ShipAddress.IsCustEditable" ng-class="{required: currentOrder.IsMultipleShip() && user.Permissions.contains('EditShipToName') && !ShipAddress.IsCustEditable}">{{('First' | r) + ' ' + ('Name' | r) | xlat}}</label>
@@ -130,7 +129,7 @@
                                         <i class="fa fa-map-marker"></i>
                                     </div>
                                 </div>
-                                <div class="view-form-icon" ng-show="item.ShipAddressID || currentOrder.IsMultipleShip() && item.ShipAddressID && user.ShipMethod != null">
+                                <div class="view-form-icon" ng-show="currentOrder.LineItems[0].ShipperName || currentOrder.IsMultipleShip() && user.ShipMethod != null">
                                     <div ng-class="{'view-form-select': !item.ShipperName, '' : item.ShipperName }">
                                         <label ng-class="{required: currentOrder.IsMultipleShip() && user.ShipMethod != null}">{{('Shipping' | r) + ' ' + ('Method' | r) | xlat}}</label>
                                         <select class="form-control" ng-change="updateShipper(item)"
