@@ -1,5 +1,12 @@
-four51.app.controller('CategoryCtrl', ['$routeParams', '$sce', '$scope', '$451', 'Category', 'Product', 'Nav',
-function ($routeParams, $sce, $scope, $451, Category, Product, Nav) {
+four51.app.controller('CategoryCtrl', ['$routeParams', '$sce', '$scope', '$451', 'Category', 'Product', 'Nav', '$location',
+function ($routeParams, $sce, $scope, $451, Category, Product, Nav, $location) {
+    
+    $scope.sort = $scope.$parent.sort;
+                 
+                        
+	if ($location.search().token && !$scope.Four51User.isAuthenticated())
+		$location.path('login');
+    
 	$scope.productLoadingIndicator = true;
 	$scope.settings = {
 		currentPage: 1,
@@ -51,5 +58,8 @@ function ($routeParams, $sce, $scope, $451, Category, Product, Nav) {
 			$scope.sorter = 'StandardPriceSchedule.PriceBreaks[0].Price' :
 			$scope.sorter = s.replace(' DESC', "");
 		$scope.direction = s.indexOf('DESC') > -1;
+		$scope.$parent.sorter = $scope.sorter;
+		$scope.$parent.sort = $scope.sort;
+		$scope.$parent.sortName = $scope.sortName;
 	});
 }]);

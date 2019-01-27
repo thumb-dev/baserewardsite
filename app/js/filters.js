@@ -78,3 +78,27 @@ four51.app.filter('paginate', function() {
 		return input.slice(start);
 	}
 });
+four51.app.filter('hideSpecs', function() {
+    return function(value) {
+        var output = [];
+        angular.forEach(value, function (v) {
+            if (v.Name != 'pa_shipping_height' && v.Name != 'pa_shipping_length' && v.Name != 'pa_shipping_width' && v.Name != 'pa_shipping_weight' && v.Name != 'pa_shipping_origin_code') {
+                output.push(v);
+            }
+
+        });
+        return output;
+    }    
+});
+four51.app.filter('hideOrderFields', function() {
+    return function(value) {
+        var output = [];
+        angular.forEach(value, function (v) {
+            if (v.Name != 'XLUserCompany' && v.Name != 'XLUserFirstName' && v.Name != 'XLUserLastName' && v.Name != 'XLUserMerchant' && v.Name != 'XLUserMerchantLocation' && v.Name != 'XLUserMerchantRep' && v.Name != 'XLUserPhoneNumber' && v.Name != 'XLUserPointsSpentTotal') {
+                output.push(v);
+            }
+
+        });
+        return output;
+    }    
+});

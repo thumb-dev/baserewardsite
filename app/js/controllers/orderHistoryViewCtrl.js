@@ -1,24 +1,12 @@
-four51.app.controller('OrderViewCtrl', ['$scope', '$location', '$routeParams', 'Order', 'FavoriteOrder', 'Address', 'User', 'Variant',
-	function ($scope, $location, $routeParams, Order, FavoriteOrder, Address, User, Variant) {
+four51.app.controller('OrderViewCtrl', ['$scope', '$location', '$routeParams', 'Order', 'FavoriteOrder', 'Address', 'User',
+	function ($scope, $location, $routeParams, Order, FavoriteOrder, Address, User) {
 		$scope.loadingIndicator = true;
 
-		$scope.isInPath = function(path) {
-			var cur_path = $location.path().replace('/', '');
-			var result = false;
-
-			if(cur_path.indexOf(path) > -1) {
-				result = true;
-			}
-			else {
-				result = false;
-			}
-			return result;
-		};
 
 		Order.get($routeParams.id, function(data){
 			$scope.loadingIndicator = false;
 			$scope.order = data;
-			$scope.order.recent = $scope.isInPath("new");
+			$scope.order.recent = ((Date.parse(data.DateSubmitted) + 300000) - new Date().getTime()) > 0;
 			$scope.hasSpecsOnAnyLineItem = false;
 			for(var i = 0; i < data.LineItems.length ; i++) {
 				if (data.LineItems[i].Specs) {
@@ -106,16 +94,4 @@ four51.app.controller('OrderViewCtrl', ['$scope', '$location', '$routeParams', '
 		$scope.onPrint = function()  {
 			window.print();
 		};
-
-        $scope.downloadProof = function(item) {
-            $scope.errorMessage = null;
-            Variant.get({VariantInteropID: item.Variant.InteropID, ProductInteropID: item.Product.InteropID }, function(v) {
-                if (v.ProofUrl) {
-                    window.location = v.ProofUrl;
-                }
-                else {
-                    $scope.errorMessage = "Unable to download proof"
-                }
-            });
-        };
 	}]);

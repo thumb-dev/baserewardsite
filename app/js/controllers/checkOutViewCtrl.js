@@ -1,5 +1,5 @@
-four51.app.controller('CheckOutViewCtrl', ['$scope', '$routeParams', '$location', '$filter', '$rootScope', '$451', 'User', 'Order', 'OrderConfig', 'FavoriteOrder', 'AddressList', 'GoogleAnalytics',
-function ($scope, $routeParams, $location, $filter, $rootScope, $451, User, Order, OrderConfig, FavoriteOrder, AddressList, GoogleAnalytics) {
+four51.app.controller('CheckOutViewCtrl', ['$scope', '$routeParams', '$location', '$filter', '$rootScope', '$451', 'Analytics', 'User', 'Order', 'OrderConfig', 'FavoriteOrder', 'AddressList', 'Resources',
+function ($scope, $routeParams, $location, $filter, $rootScope, $451, Analytics, User, Order, OrderConfig, FavoriteOrder, AddressList, Resources) {
 	$scope.errorSection = 'open';
 
 	$scope.isEditforApproval = $routeParams.id != null && $scope.user.Permissions.contains('EditApprovalOrder');
@@ -7,34 +7,119 @@ function ($scope, $routeParams, $location, $filter, $rootScope, $451, User, Orde
 		Order.get($routeParams.id, function(order) {
 			$scope.currentOrder = order;
 		});
-	}
+    }
+    
+    angular.forEach($scope.currentOrder.OrderFields, function(field){
+        if (field.Name == 'XLUserFirstName') {
+            field.Value = $scope.user.FirstName;
+        }
+        if (field.Name == 'XLUserLastName') {
+            field.Value = $scope.user.LastName;
+        }
+        if (field.Name == 'XLUserCompany') {
+            angular.forEach($scope.user.CustomFields, function(uField){
+                if (uField.Name == 'XL1_Company') {
+                    field.Value = uField.Value;
+                }
+            });
+        }
+        if (field.Name == 'XLUserPhoneNumber') {
+            field.Value = $scope.user.Phone;
+        }
+        if (field.Name == 'XLUserMerchant') {
+            angular.forEach($scope.user.CustomFields, function(uField){
+                if (uField.Name == 'XL1_MerchantUser') {
+                    field.Value = uField.Value;
+                }
+            });
+        }
+        if (field.Name == 'XLUserMerchantLocation') {
+            angular.forEach($scope.user.CustomFields, function(uField){
+                if (uField.Name == 'XL1_MerchantLocation') {
+                    field.Value = uField.Value;
+                }
+            });
+        }
+        if (field.Name == 'XLUserMerchantRep') {
+            angular.forEach($scope.user.CustomFields, function(uField){
+                if (uField.Name == 'XL1_Rep_Display') {
+                    field.Value = uField.Value;
+                }
+            });
+        }
+        if (field.Name == 'XLUserPointsSpentTotal') {
+            if ($scope.isSplitBilling) {
+                field.Value = $scope.currentBudgetAccount.Balance;
+            }
+            else {
+                field.Value = $scope.currentOrder.Total;
+            }
+        }
+    });
+
+    $scope.$watch('splitBilling', function(){
+        updatePointsSpent();
+    }, true);
+
+    $scope.$watch('currentBudgetAccount', function(){
+        updatePointsSpent();
+    }, true);
+
+    function updatePointsSpent() {
+        angular.forEach($scope.currentOrder.OrderFields, function(field){
+            if (field.Name == 'XLUserPointsSpentTotal') {
+                if ($scope.isSplitBilling) {
+                    field.Value = $scope.currentBudgetAccount.Balance;
+                }
+                else {
+                    field.Value = $scope.currentOrder.Total;
+                }
+            }
+        });
+    }
 
 	if (!$scope.currentOrder) {
         $location.path('catalog');
     }
+    
+    angular.forEach($scope.currentOrder.LineItems, function(item){
+        if(item.Product.InteropID == "xl1-order-handling-charge"){
+            $scope.handlingCharge = item.LineTotal;
+        }
+    });
 
 	$scope.hasOrderConfig = OrderConfig.hasConfig($scope.currentOrder, $scope.user);
 	$scope.checkOutSection = $scope.hasOrderConfig ? 'order' : 'shipping';
 
     function submitOrder() {
 	    $scope.displayLoadingIndicator = true;
-		$scope.submitClicked = true;
 	    $scope.errorMessage = null;
+		
+		angular.forEach($scope.currentOrder.LineItems, function(item, index) {
+			if(item.Product.ExternalID == "XL1-17370"){
+				angular.forEach($scope.user.CustomFields, function(field, index) {
+					if(field.Name == "XL1_Codes_Submitted"){
+						field.Value = "Redeemed";
+					}
+				});
+				//User.save($scope.user);
+			}
+		});
+		
         Order.submit($scope.currentOrder,
 	        function(data) {
-				if ($scope.user.Company.GoogleAnalyticsCode) {
-					GoogleAnalytics.ecommerce(data, $scope.user);
-				}
+//				if ($scope.user.Company.GoogleAnalyticsCode) {
+//					Analytics.trackOrder(data, $scope.user);
+//				}
 				$scope.user.CurrentOrderID = null;
 				User.save($scope.user, function(data) {
 			        $scope.user = data;
 	                $scope.displayLoadingIndicator = false;
 		        });
 		        $scope.currentOrder = null;
-				$location.path('/order/new/' + data.ID);
+		        $location.path('/order/' + data.ID);
 	        },
 	        function(ex) {
-				$scope.submitClicked = false;
 		        $scope.errorMessage = ex.Message;
 		        $scope.displayLoadingIndicator = false;
 		        $scope.shippingUpdatingIndicator = false;
@@ -45,24 +130,6 @@ function ($scope, $routeParams, $location, $filter, $rootScope, $451, User, Orde
 
 	$scope.$watch('currentOrder.CostCenter', function() {
 		OrderConfig.address($scope.currentOrder, $scope.user);
-	});
-
-	$scope.$watch('currentOrder.LineItems',function(item){
-		if(!item)return;
-		if($scope.user.ShipMethod && $scope.user.ShipMethod.DefaultShipperAccountNumber){
-			angular.forEach($scope.currentOrder.LineItems, function(li){
-				li.ShipAccount = $scope.user.ShipMethod.DefaultShipperAccountNumber;
-			});
-		}
-	});
-
-	$scope.$watch('currentOrder.LineItems[0].ShipAccount',function(val){
-		if(!val)return;
-		if(!$scope.currentOrder.IsMultipleShip()){
-			angular.forEach($scope.currentOrder.LineItems, function(li){
-				li.ShipAccount = val;
-			});
-		}
 	});
 
     function saveChanges(callback) {

@@ -1,5 +1,5 @@
-four51.app.controller('LineItemViewCtrl', ['$scope', '$routeParams', 'Order', 'Product',
-function ($scope, $routeParams, Order, Product) {
+four51.app.controller('LineItemViewCtrl', ['$scope', '$routeParams', 'Order', 'Product', 'Variant',
+function ($scope, $routeParams, Order, Product, Variant) {
     Order.get($routeParams.orderid, function(data){
         $scope.order = data;
         $scope.LineItem = data.LineItems[$routeParams.lineitemindex];
@@ -15,4 +15,8 @@ function ($scope, $routeParams, Order, Product) {
 			$scope.StaticSpecGroups.VariableSpecs = {Name: 'Variable Specs', Specs: $scope.LineItem.Specs};
 		});
 	});
+	
+    Variant.get({VariantInteropID: $scope.LineItem.Variant.InteropID, ProductInteropID: $scope.LineItem.Product.InteropID }, function(v) {
+        $scope.LineItem.Variant = v;
+    });
 }]);

@@ -23,7 +23,7 @@ four51.app.factory('Order', ['$resource', '$rootScope', '$451', 'Security', 'Err
 		}
 		order.IsMultipleShip = function() {
 			var multi = false;
-			if (_multipleShip) return true;
+			if (_multipleShip && order.LineItems[0].ShipAddressID == null) return true;
 			angular.forEach(order.LineItems, function(li, i) {
 				if (multi) return;
 				multi = i > 0 ?
@@ -185,23 +185,43 @@ four51.app.factory('Order', ['$resource', '$rootScope', '$451', 'Security', 'Err
 		return this;
 	};
 
+	/*var _calcdisc = function(order, acct) {
+		if (acct == null) return order.Total;
+		var discount = 0;
+		if (acct.AccountType.MaxPercentageOfOrderTotal != 100) {
+			var total = order.Total - acct.Balance;
+			if (total < (total / acct.AccountType.MaxPercentageOfOrderTotal))
+				discount = total / acct.AccountType.MaxPercentageOfOrderTotal;
+			else
+				discount = acct.Balance;
+		}
+		else
+			discount = acct.Balance;
+
+		return order.Total - discount;
+	};*/
+
 	var _calcdisc = function(order, acct) {
 		if (acct == null) return order.Total;
 		var discount = 0;
 		if (acct.AccountType.MaxPercentageOfOrderTotal && acct.AccountType.MaxPercentageOfOrderTotal != 100) {
-			//console.log('SpendingAcctBalance:' + acct.Balance); //100
+
+			console.log('SpendingAcctBalance:' + acct.Balance); //100
+
 			var total = order.Total;
-			//console.log('Total (orderTotal):' + total); //35
+			console.log('Total (orderTotal):' + total); //35
+
 			var discountAmount = '0.' + acct.AccountType.MaxPercentageOfOrderTotal;
-			//console.log('Discount Amount:' + discountAmount);
+			console.log('Discount Amount:' + discountAmount);
+
 			discount = total * discountAmount;
-			//console.log('Total is less than account balance x discount % amount:' + discount);
+			console.log('Discount:' + discount);
 
 		}
 		else {
-			/*this is correct and applies when the AccountType.MaxPercentageOfOrderTotal is 100% // works fine even if discount is more than the order*/
+			// this is correct and applies when the AccountType.MaxPercentageOfOrderTotal is 100% and works fine even if discount is more than the order
 			discount = acct.Balance;
-			//console.log('% of Order Total is 100%:' + discount);
+			console.log('% of Order Total is 100%:' + discount);
 		}
 
 		return order.Total - discount;

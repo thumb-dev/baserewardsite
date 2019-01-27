@@ -1,12 +1,5 @@
 four51.app.controller('ProductCtrl', ['$scope', '$routeParams', '$route', '$location', '$451', 'Product', 'ProductDisplayService', 'Order', 'Variant', 'User',
 function ($scope, $routeParams, $route, $location, $451, Product, ProductDisplayService, Order, Variant, User) {
-    $scope.isEditforApproval = $routeParams.orderID && $scope.user.Permissions.contains('EditApprovalOrder');
-    if ($scope.isEditforApproval) {
-        Order.get($routeParams.orderID, function(order) {
-            $scope.currentOrder = order;
-        });
-    }
-
     $scope.selected = 1;
     $scope.LineItem = {};
 	$scope.addToOrderText = "Add To Cart";
@@ -66,7 +59,7 @@ function ($scope, $routeParams, $route, $location, $451, Product, ProductDisplay
 				redirect ? $location.path('/product/' + $scope.LineItem.Product.InteropID) : $route.reload();
 			},
 			function(ex) {
-				if ($scope.lineItemErrors.indexOf(ex.Message) == -1) $scope.lineItemErrors.unshift(ex.Message);
+				$scope.lineItemErrors.push(ex.Message);
 				$scope.showAddToCartErrors = true;
 			}
 		);
@@ -103,12 +96,10 @@ function ($scope, $routeParams, $route, $location, $451, Product, ProductDisplay
 					$scope.user.CurrentOrderID = o.ID;
 					User.save($scope.user, function(){
 						$scope.addToOrderIndicator = true;
-						$location.path('/cart' + ($scope.isEditforApproval ? '/' + o.ID : ''));
+						$location.path('/cart');
 					});
 				},
 				function(ex) {
-					//remove the last LineItem added to the cart.
-					$scope.currentOrder.LineItems.pop();
 					$scope.addToOrderIndicator = false;
 					$scope.lineItemErrors.push(ex.Detail);
 					$scope.showAddToCartErrors = true;
