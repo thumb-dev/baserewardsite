@@ -1,6 +1,237 @@
-/*
-Static file for Theme changes
-Theme name: My SPA Theme
-Version: 1.0
-Template: Howdy
-*/
+.surveyButton{
+    background-color:#42b4ea;font-size:12pt;width:100%;height:a44px;cursor:pointer; text-align:center;margin-top:10px;margin-bottom:20px;
+    }
+    
+     /* The side navigation menu */
+    .sidenav {
+        height: 100%; /* 100% Full-height */
+        width: 0; /* 0 width - change this with JavaScript */
+        position: fixed; /* Stay in place */
+        z-index: 10000; /* Stay on top */
+        top: 0;
+        left: 0;
+        background-color: #111; /* Black*/
+        overflow-x: hidden; /* Disable horizontal scroll */
+        padding-top: 60px; /* Place content 60px from the top */
+        transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+    }
+    
+    /* The navigation menu links */
+    .sidenav a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s
+    }
+    
+    /* When you mouse over the navigation links, change their color */
+    .sidenav a:hover, .offcanvas a:focus{
+        color: #f1f1f1;
+    }
+    
+    /* Position and style the close button (top right corner) */
+    .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px !important;
+        margin-left: 50px;
+    }
+    
+    /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+    #main {
+        transition: margin-left .5s;
+        padding: 20px;
+    }
+    
+    /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+    @media screen and (max-height: 450px) {
+        .sidenav {padding-top: 15px;}
+        .sidenav a {font-size: 18px;}
+    }
+    
+    
+    
+    
+    .goodMessage{width:100%;background-color:#83b739;color:white;display:block;padding:4px;margin:0px;}
+    .neutralMessage{width:100%;background-color:#FFF;color:black;display:block;padding:4px;margin:0px;}
+    .negativeMessage{width:100%;background-color:#F2DEDE;color:#A94442;display:block;padding:4px;margin:0px;}
+    .rightAlign {text-align:right;}
+    .leftAlign {text-align:left;}
+    .productName {min-height:50px;display:block;}
+    .descriptionText{font-weight:normal;font-size:12pt;}
+    .descriptionText a {font-weight:normal;font-size:12pt;}
+    figure {padding-top:30px;}
+    .order-location{color:white;}
+    .panel-lineitem .quantity-total {background-color:transparent;border:0px;}
+    .btn.btn-primary{text-transform:none;}
+    
+    .transparent {opacity:0;}
+    .panel-product-list ul li.inline {padding:10px;height:350px;}
+    .inline {display:inline;}
+    
+    /*Continue Shopping Button */
+    .btn-shop, .btn-shop:hover {background-color:#009c9c; color:#ffffff;}
+    
+    /*Login Page */
+    h1 {color:white;font-family: 'Oswald', sans-serif;font-size:40pt;}
+    .order-cloud .form-signin {margin-left:0px; width: 100%; background-color: transparent;box-shadow: none;}
+    .order-cloud .btn {max-width:400px; margin-top:20px; margin-bottom:20px;}
+    .order-cloud .form-control {max-width:400px;}
+    
+    /* Max-Width Center Content */
+    @media (min-width: 768px) {.container, .container-view {width: 730px;}}
+    @media (min-width: 992px) {.container, .container-view {width: 950px;}}
+    @media (min-width: 1200px) {.container, .container-view {width: 1150px;}}
+    
+    /* Item Image Border */
+    .product-image-large {border:1px solid #909090;}
+    .thumbnail img {border:0px; max-height:150px;}
+    
+    .view-form-icon label {font-size:14pt;top:-30px; color:white;}
+    
+    .blackText{color:black;}
+    .whiteText{color:white;}
+    .contact-us-font {font-size:18pt; color:white;}
+    .specialNav a {color:black; margin:20px;}
+    .subNav {background-color:#111;padding:10px;font-size:18pt;}
+    .homeLinks {color:white;padding:0px 0px 20px 5px;}
+    .rules {color:white;padding:10px 20px;}
+    .navbar-default  {background-color: #0082C6;}
+    .navbar-nav a  {color: #FFFFFF !important;}
+    .navbar-nav li.active a  {background-color: #0071AD !important;}
+    .navbar-nav li.active a  {color: #FFFFFF !important;}
+    .navbar-default  {border-color: #0082C6;}
+    body  {font-family: 'Oswald', sans-serif; background-image: url('http://prowebservicehost.com/sites/xl1/images/backgroundLQ.jpg');background-size:cover;background-attachment:fixed;background-color:#1d1d1d;background-repeat:no-repeat;height:100%;}
+    .text-primary  {color: #0C2A3A;}
+    .text-info  {color: #83b739;}
+    .text-success{color:#83b739;}
+    body a  {color: #83b739;}
+    body a:visited  {color: #739b3b;}
+    .green{color: #83b739;}
+    body a:hover {color: #83b739; text-decoration:none;}
+    .btn {font-size:14pt;}
+    .btn-primary  {background-color: #83b739; color: #FFFFFF; border-color: #83b739;}
+    .btn-primary:hover  {background-color: #8fc443; color: #FFFFFF; border-color: #83b739;}
+    .btn-default  {background-color: #83b739; color: #333333; border-color: #83b739;}
+    .btn-default:hover  {background-color: #8fc443; color: #333333;}
+    .btn-info  {background-color: #070f02; color: #FFFFFF; border-color: #070f02;}
+    .btn-info:hover  {background-color: #122009; color: #FFFFFF; border-color: #070f02;}
+    .btn-success  {background-color: #5CB85C; color: #FFFFFF; border-color: #4CAE4C;}
+    .btn-success:hover  {background-color: #47A447; color: #FFFFFF;}
+    .btn-warning  {background-color: #f0ad4e; color: #FFFFFF; border-color: #EEA236;}
+    .btn-warning:hover  {background-color: #ED9C28; color: #FFFFFF;}
+    .btn-danger  {background-color: #D9534F; color: #FFFFFF; border-color: #D43F3A;}
+    .btn-danger:hover  {background-color: #D2322D; color: #FFFFFF;}
+    .jumbotron  {  background-color:rgba(0,0,0,0.6);color:white;margin:0;padding:0;}
+    .jumbotron h2  {color: #333333; width:100%;}
+    h2 a {color:white; text-decoration:none; font-size:30pt;}
+    h2 a:hover {text-decoration:none;}
+    h2 a:visited {text-decoration:none; color:#fff;}
+    #codeText{width:100%;height:135px;color:#83b739;font-size:12pt;}
+    #codeSubmit, #input_2{background-color:#83b739;color:white;border:0;margin-top:10px;margin-bottom:10px;width:100%;height:50px;}
+    .bigBucks{color:#83b739; font-size:36pt;border-radius:5px;background-color:black;padding:5px;}
+    .homeView{background-color:rgba(0,0,0,0.6);border:0;}
+    .homeContent {margin:10px; color:white;}
+    .shopButton {background-color:#83b739;font-size:24pt;width:100%;height:84px;cursor:pointer; text-align:center;}
+    .shopButton a {color:white;}
+    .bigText{font-size:24pt;font-weight:bold;color:#83b739;}
+    .whiteBG{background-color:white;}
+    .whiteText{color:white;}
+    .standingsRow{border-bottom:1px solid #5c5c5c;font-size:16pt;padding:20px;cursor:pointer;}
+    .repStandingsRow{border-bottom:1px solid #5c5c5c;font-size:16pt;padding:20px;}
+    .standingsHeader{font-size:22pt;font-weight:bold;}
+    .normalSelect{min-height:0px;margin:6.5px;}
+    .selectDiv{display:inline;}
+    
+    .jumbotron h4  {color: #333333; width:100%;}
+    h4 a {color:white; text-decoration:none;}
+    h4 a:visited {text-decoration:none; color:#fff;}
+    .kf-embed-klip{background-color:transparent !important;}
+    
+    .jumbotron h2 img {max-height:200px;margin-top:10px;margin-bottom:-50px;}
+    .panel-primary .panel-heading .panel-title  {background-color: #f5f5f5;}
+    .panel-primary .panel-heading .panel-title  {color: #000000;}
+    .panel-default .panel-heading .panel-title  {background-color: #F5F5F5;}
+    .panel-default .panel-heading .panel-title  {color: #333333;}
+    .panel {background-color:rgba(0,0,0,0.6);border:0;}
+    .panel-footer{background-color:transparent;border:0;}
+    .panel-lineitem a:hover {background-color:transparent;}
+    .fa-arrow-left{color:#000 !important;}
+    .fa-caret-down{color:#75ACB3 !important;}
+    .dropdown-menu > li > a {color:white;}
+    .dropdown-menu > li > a:hover{background-color:#83b739 !important;}
+    .dropdown-menu > li > a:focus{background-color:#83b739 !important;}
+    .dropdown-menu > .active > a {background-color:#83b739 !important;}
+    .dropdown ul li ul li {margin-left:30px;float:none;display:block;}
+    .dropdown ul li ul li a {color:white;display:block;}
+    .dropdown ul li ul li a:hover{background-color:#83b739 !important;}
+    .dropdown ul li ul li a:focus{background-color:#83b739 !important;}
+    .navbar-nav .dropdown-menu a {color: #333 !important;}
+    .navbar-nav .dropdown-menu a:hover {color: #fff !important;}
+    .dropdown-toggle {width:100%;height:100%;background-color:#83b739;}
+    .dropdown-menu {background-color:black;width:100%;border:1px solid white;}
+    .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus{background-color: #0071AD !important;}
+    .Document {display: none;}
+    .img-center {margin-right:auto; margin-left:auto;}
+    .cling {position: fixed; right: 0px; top: 237px;}
+    .bullet-list li {list-style-type: disc; margin-left: 13px;}
+    .vertical-center {
+        display: flex;
+        justify-content:center;
+        align-content:center;
+        flex-direction:column;
+    }
+    .right-align{text-align:right;}
+    .centered{margin-left:auto;margin-right:auto;text-align:center;}
+    .login-link{width:50%;}
+    .category-btn {padding: 15px; background: url('http://trublue.prograde.com/images/site_images/TB_categoryIcons_121514-btnBlank.png'); width:200px; min-height:164px;}
+    .category-btn h5 {font-size:18px; color:white; font-weight:bold;}
+    
+    
+    html {
+      position: relative;
+      min-height: 100%;
+    }
+    body {
+      /* Margin bottom by footer height */
+      margin-bottom: 100px;
+    }
+    footer {
+      margin:0px;
+      padding:20px;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      /* Set the fixed height of the footer here */
+      height: 100px;
+      background-color:rgba(0,0,0,0.6);
+      color:white;
+    }
+    
+    footer div, footer div div{ display: flex; align-items: center; justify-content: center;}
+    
+    .brandFlex{ text-align:right; display: flex; align-items: center; height:155px;}
+    
+    .leftFlex
+    {
+        align-self:flex-start;
+    }
+    
+    .rightFlex
+    {
+        justify-self:flex-end;
+    }
+    
+    .ad
+    {
+        padding:0;
+        margin:0;
+    }
+    
+    .cat-description {
+        color:white;
+        margin-bottom:20px;
+    }
