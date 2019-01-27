@@ -1,11 +1,47 @@
-<section class="jumbotron" ng-class="{'active': isActive('catalog')}" ng-show="user.Company.LogoUrl">
+<section class="jumbotron" ng-class="{'active': true, 'hidden-xs': isActive('landing')}">
     <div class="container">
-        <h2 class="thumbnail" ng-show="Four51User.isAuthenticated()">
-            <a href="catalog">
-                <img ng-src="{{user.Company.LogoUrl}}" />
-            </a>
-            <span>{{user.Company.Name}}</span>
-            <homemessage />
-        </h2>
+        <div class="row">
+            <div class="col-sm-6 hidden-xs">
+                <h2>
+                    <a ng-click="refreshUser()" href="landing">
+                        <img src="https://prowebservicehost.com/sites/xl1/images/xl1.png" ng-class="{'transparent': isActive('landing')}" />
+                    </a>
+                </h2>
+            </div>
+            <div class="col-sm-6 hidden-xs brandFlex" ng-show="Four51User.isAuthenticated() && user.Type !== 'TempCustomer'">
+                <h2 class="rightFlex">
+                    <a ng-show="getUserType() == 'Merchant'" href="standings">
+                        <i class="fa fa-user" />&nbsp;&nbsp;&nbsp;{{merchantCompany}} - {{merchantLocation}}
+                    </a>
+                    <a ng-show="getUserType() == 'Dealer' && user.Type !== 'TempCustomer'" href="admin">
+                        <i class="fa fa-user" />&nbsp;&nbsp;&nbsp;{{user.Username}}
+                    </a>
+                    <a ng-show="getUserType() == 'Dealer' && user.Type == 'TempCustomer'" href="admin">
+                        <i class="fa fa-user" />&nbsp;&nbsp;&nbsp;New User
+                    </a>
+                </h2>
+            </div>
+        </div>
+        
+        
+        <div class="row">
+            <div class="col-xs-12 visible-xs">
+                <h2>
+                    <a ng-click="refreshUser()" href="landing">
+                        <img src="https://prowebservicehost.com/sites/xl1/images/xl1.png" ng-class="{'transparent': isActive('landing')}" />
+                    </a>
+                </h2>
+            </div>
+            <div class="col-xs-12 visible-xs" ng-show="Four51User.isAuthenticated() && user.Type !== 'TempCustomer'">
+                <h4>
+                    <a style="margin-top:35px" ng-show="getUserType() == 'Merchant' && eagleHasRegistered" href="standings">
+                        <i class="fa fa-user" />&nbsp;&nbsp;&nbsp;{{merchantCompany}} - {{merchantLocation}}
+                    </a>
+                    <a style="margin-top:35px" ng-show="getUserType() == 'Dealer' && eagleHasRegistered" href="admin">
+                        <i class="fa fa-user" />&nbsp;&nbsp;&nbsp;{{user.Username}}
+                    </a>
+                </h4>
+            </div>
+        </div>
     </div>
 </section>
