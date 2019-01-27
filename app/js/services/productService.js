@@ -1,4 +1,5 @@
 four51.app.factory('Product', ['$resource', '$451', 'Security', 'User', function($resource, $451, Security, User) {
+	//var _cacheName = '451Cache.Product.' + $451.apiName;
 	var variantCache = [], productCache = [], criteriaCache;
 	function _then(fn, data, count) {
 		if (angular.isFunction(fn))
@@ -10,9 +11,6 @@ four51.app.factory('Product', ['$resource', '$451', 'Security', 'User', function
 		angular.forEach(product.Specs, function(spec) {
 			if (spec.ControlType == 'File' && spec.File && spec.File.Url.indexOf('auth') == -1)
 				spec.File.Url += "&auth=" + Security.auth();
-
-			if (spec.ControlType == 'File' && spec.DefaultValue)
-				spec.Value = spec.DefaultValue;
 		});
 
 		angular.forEach(product.StaticSpecGroups, function(group) {
@@ -24,7 +22,8 @@ four51.app.factory('Product', ['$resource', '$451', 'Security', 'User', function
 
         if(product.StaticSpecGroups){
             product.StaticSpecLength = 0;
-			product.StaticSpecGroups.VisibleSpecGroups = [];
+            product.StaticSpecGroups.EvenSpecGroups = [];
+            product.StaticSpecGroups.OddSpecGroups = [];
             angular.forEach(product.StaticSpecGroups, function(g){
                 var visible = false;
                 for (var i in g.Specs) {
@@ -32,10 +31,10 @@ four51.app.factory('Product', ['$resource', '$451', 'Security', 'User', function
                         visible = true;
                     }
                 }
-				if (visible) {
-					product.StaticSpecGroups.VisibleSpecGroups.push(g);
-					product.StaticSpecLength++;
-				}
+                if (visible) {
+                    product.StaticSpecGroups.EvenSpecGroups.length == product.StaticSpecGroups.OddSpecGroups.length ? product.StaticSpecGroups.EvenSpecGroups.push(g) : product.StaticSpecGroups.OddSpecGroups.push(g);
+                    product.StaticSpecLength++;
+                }
             });
         }
 
@@ -76,6 +75,8 @@ four51.app.factory('Product', ['$resource', '$451', 'Security', 'User', function
 	     if (!angular.isUndefined(searchTerm)) {
 		     variantCache.splice(0, variantCache.length);
 	     }
+	     //var product = store.get(_cacheName + param);
+	     //product ? (function() { _extend(product);	_then(success, product); })() :
 		 var product = $resource($451.api('Products/:interopID'), { interopID: '@ID' }).get({ interopID: param, page: page || 1, pagesize: pagesize || 10, searchTerm: searchTerm }).$promise.then(function(product) {
 			for (var i = 0; i <= product.VariantCount-1; i++) {
 				if (typeof variantCache[i] == 'object') continue;
@@ -84,6 +85,7 @@ four51.app.factory('Product', ['$resource', '$451', 'Security', 'User', function
 		    product.Variants = variantCache;
 
 		    _extend(product);
+			//store.set(_cacheName + product.InteropID, product);
 			_then(success, product);
 	     });
     }
@@ -106,6 +108,9 @@ four51.app.factory('Product', ['$resource', '$451', 'Security', 'User', function
 		    productCache.splice(0, productCache.length);
 	    criteriaCache = criteria;
 
+	    //var cacheID = '451Cache.Products.' + criteria.CategoryInteropID + criteria.SearchTerms.replace(/ /g, "");
+		//var products = store.get(cacheID);
+	    //products ? _then(success, products) :
 	    if (typeof productCache[(criteria.Page-1) * criteria.PageSize] == 'object' && typeof productCache[(criteria.Page * criteria.PageSize) - 1] == 'object') {
 		    _then(success, productCache, productCache.length);
 	    }

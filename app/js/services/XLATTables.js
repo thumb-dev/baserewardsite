@@ -1,6 +1,6 @@
 var XLATTables = {
     'Currency': {
-        'en-US': '$',
+        'en-US': '',
         'en-GB': '£',
         'nl-NL': '€',
         'en-IE': '€',
@@ -145,7 +145,6 @@ var XLATTables = {
         'conditions of use': 'condiciones de Uso',
         'confirm password': 'confirmar contraseña',
         'contact us': 'contacto ',
-        'continue shopping': 'continuar las compras',
         'copyright': 'derecho de autor',
         'copy to all': 'copiar en todo',
         'country': 'país',
@@ -309,7 +308,7 @@ var XLATTables = {
         'promotions': 'promociones',
         'promo code': 'código de promoción',
         'promotion code': 'código de promoción',
-        'Send a copy of the order details to above email address.': 'Envíe una copia de los detalles del pedido a la dirección de correo electrónico anterior.',
+        'provide an email address if you would like to receive notifications concerning this order.': 'proporcione una dirección de correo electrónico si desea recibir notificaciones acerca de este pedido',
         'purchaseorder': 'orden de compra',
         'purchase order': 'orden de compra',
         'quantity': 'cantidad',
@@ -407,7 +406,6 @@ var XLATTables = {
         'shiptozip': 'enviar al código postal',
         'ship to zip': 'enviar al código postal',
         'shipment report':'informe de envíos',
-        'shop': 'hacer compras',
         'show specification': 'mostrar especificación',
         'hide specification': 'ocultar especificación',
         'single address': 'dirección única',

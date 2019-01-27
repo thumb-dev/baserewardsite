@@ -16,9 +16,8 @@ four51.app.factory('User', ['$q', '$rootScope', '$resource', '$451', 'Security',
 			if (f.ControlType == 'File' && f.File && f.File.Url.indexOf('auth') == -1)
 				f.File.Url += "&auth=" + Security.auth();
 	    });
-	    if(u.Company.POIDMask){
-			u.Company.POIDMask = u.Company.POIDMask.toUpperCase();
-		}
+		if (u.Company.POIDMask)
+		    u.Company.POIDMask = u.Company.POIDMask.toUpperCase();
     }
 
 	var _refresh = function() {
@@ -54,12 +53,7 @@ four51.app.factory('User', ['$q', '$rootScope', '$resource', '$451', 'Security',
 	    store.clear();
 		$resource($451.api('login')).get(credentials).$promise.then(
 	        function(u) {
-                if(credentials.CurrentOrderID){
-                    _setorder(credentials.CurrentOrderID,success,error);
-                }
-                else{
-                    _then(success, u);
-                }
+                _then(success,u);
 	        },
 	        function(ex) {
 		        if (angular.isFunction(error))
@@ -72,12 +66,7 @@ four51.app.factory('User', ['$q', '$rootScope', '$resource', '$451', 'Security',
 		store.clear();
 		$resource($451.api('login')).save(credentials).$promise.then(
 			function(u) {
-				if(credentials.CurrentOrderID){
-					_setorder(credentials.CurrentOrderID,success,error);
-				}
-				else{
-					_then(success, u);
-				}
+				_then(success, u);
 			},
 			function(ex) {
 				if (angular.isFunction(error)) {
