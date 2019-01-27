@@ -1,22 +1,22 @@
 <div>
     <p>
-        <span class="text-info">{{'Subtotal' | r | xlat}}</span>
-        <span class="pull-right">{{order.Subtotal | culturecurrency}}</span>
+        <span class="text-success">{{'Subtotal' | r | xlat}}</span>
+        <span class="pull-right whiteText">{{order.Subtotal | culturecurrency}}</span>
     </p>
+    <!--<p>
+        <span class="text-success">{{'Shipping & Handling' | r | xlat}}</span>
+        <span class="pull-right whiteText">{{order.ShippingCost | culturecurrency}}</span>
+    </p>-->
     <p>
-        <span class="text-info">{{'Shipping & Handling' | r | xlat}}</span>
-        <span class="pull-right">{{order.ShippingCost | culturecurrency}}</span>
-    </p>
-    <p>
-        <span class="text-info">{{'Tax' | r | xlat}}</span>
-        <span class="pull-right">{{order.TaxCost | culturecurrency}}</span>
+        <span class="text-success">{{'Tax' | r | xlat}}</span>
+        <span class="pull-right whiteText">{{order.TaxCost | culturecurrency}}</span>
     </p>
     <p ng-if="order.Coupon">
-        <span class="text-info">{{'Coupon' | r | xlat}} ({{order.Coupon.Label}})</span>
-        <span class="pull-right">{{order.Coupon.OrderDiscount * -1 | culturecurrency}}</span>
+        <span class="text-success">{{'Coupon' | r | xlat}} ({{order.Coupon.Label}})</span>
+        <span class="pull-right whiteText">{{order.Coupon.OrderDiscount * -1 | culturecurrency}}</span>
     </p>
-    <p><span class="text-info">{{'Total' | r | xlat}}</span>
-        <span class="pull-right">{{order.Total | culturecurrency}}</span>
+    <p><span class="text-success">{{'Total' | r | xlat}}</span>
+        <span class="pull-right whiteText">{{order.Total | culturecurrency}}</span>
     </p>
 </div>
 

@@ -1,10 +1,10 @@
 <div class="container line-item-history-view">
     <div class="col-md-5">
         <figure>
-            <img id="451_img_prod_lg" ng-src="{{LineItem.Variant.LargeImageUrl || LineItem.Product.LargeImageUrl}}" >
+            <img id="451_img_prod_lg" class="img-responsive img-center" ng-src="{{LineItem.Variant.PreviewUrl || LineItem.Product.LargeImageUrl}}" >
         </figure>
+        <p><strong><a ng-href="{{LineItem.Variant.ProofUrl}}" target="_blank">View Proof</a><a class="pull-right" ng-href="order/{{order.ID}}">Back to Order</a></strong></p>
     </div>
-
 
     <div class="col-md-6 col-md-offset-1">
         <h2>{{('Product' | r) + ' ' + ('ID' | r) | xlat}} {{LineItem.ProductIDText}}</h2>
